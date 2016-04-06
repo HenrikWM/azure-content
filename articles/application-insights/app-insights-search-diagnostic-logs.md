@@ -241,11 +241,11 @@ It's therefore useful to put build information, such as the URL of the current v
 Instead of adding the property separately to every exception call, you can set the information in the default context. 
 
     // Telemetry initializer class
-    public class MyTelemetryInitializer : IContextInitializer
+    public class MyTelemetryInitializer : ITelemetryInitializer
     {
-        public void Initialize (TelemetryContext context)
+        public void Initialize (ITelemetry telemetry)
         {
-            context.Properties["AppVersion"] = "v2.1";
+            telemetry.Context.Properties["AppVersion"] = "v2.1";
         }
     }
 
@@ -254,7 +254,7 @@ In the app initializer such as Global.asax.cs:
     protected void Application_Start()
     {
         // ...
-        TelemetryConfiguration.Active.ContextInitializers
+        TelemetryConfiguration.Active.TelemetryInitializers
         .Add(new MyTelemetryInitializer());
     }
 
